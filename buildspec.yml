@@ -6,23 +6,26 @@ phases:
       nodejs: 20 # Specify Node.js version
     commands:
       - echo Installing dependencies...
-      - npm install
+      - npm ci # Faster alternative to npm install
   pre_build:
     commands:
-      - echo Running linting or pre-build tests...
-      - npm run lint || echo "Linting skipped or failed" # Ensures the process continues even if linting fails
+      - echo Running pre-build steps...
+      - echo Checking code style and linting...
+      - npm run lint || echo "Linting failed or skipped"
+      - echo Running unit tests (if any)...
+      - npm test || echo "Tests failed or skipped"
   build:
     commands:
       - echo Building the app...
       - npm run build
   post_build:
     commands:
-      - echo Running post-build steps...
-      - npm test || echo "Tests skipped or failed" # Avoid build termination if tests fail
-      - echo Build complete!
+      - echo Build process complete!
+
+cache:
+  paths:
+    - node_modules/**/*
 
 artifacts:
   files:
-    - '**/*' # Include all files in the build artifact
-  discard-paths: no # Retain the original directory structure in artifacts
-  base-directory: build # Set 'build' as the base directory for artifacts
+    - 'build/**/*' # Include only the build directory in artifacts
