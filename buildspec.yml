@@ -1,0 +1,28 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20 # Specify Node.js version
+    commands:
+      - echo Installing dependencies...
+      - npm install
+  pre_build:
+    commands:
+      - echo Running linting or pre-build tests...
+      - npm run lint # Optional: Run linting
+  build:
+    commands:
+      - echo Building the app...
+      - npm run build 
+  post_build:
+    commands:
+      - echo Running post-build steps...
+      - npm test # Run tests after build (if applicable)
+      - echo Build complete!
+
+artifacts:
+  files:
+    - '**/*' # Include all files in the build artifact (adjust based on your needs)
+  discard-paths: no
+  base-directory:build	 
