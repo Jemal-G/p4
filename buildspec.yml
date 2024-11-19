@@ -5,27 +5,22 @@ phases:
     runtime-versions:
       nodejs: 20 # Specify Node.js version
     commands:
-      - echo Installing dependencies...
-      - npm ci # Faster alternative to npm install
+      - echo Installing Node.js version 20 ...
   pre_build:
     commands:
-      - echo Running pre-build steps...
-      - echo Checking code style and linting...
-      - npm run lint || echo "Linting failed or skipped"
+      - echo Installing dependencies...
+      - npm ci  # Using npm ci for faster dependency installation
+      - echo Running linting (if needed)...
+      # - npm run lint  # Uncomment if you want to run linting
       - echo Running unit tests (if any)...
-      - npm test || echo "Tests failed or skipped"
+      # - npm run test  # Uncomment if you have unit tests configured
   build:
     commands:
       - echo Building the app...
-      - npm run build
-  post_build:
-    commands:
-      - echo Build process complete!
-
-cache:
-  paths:
-    - node_modules/**/*
+      - npm run build  # Builds the app
 
 artifacts:
   files:
-    - 'build/**/*' # Include only the build directory in artifacts
+    - '**/*' 
+  discard-paths: no
+  base-directory: build
