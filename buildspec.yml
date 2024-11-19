@@ -3,24 +3,21 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 20 # Specify Node.js version
+      nodejs: 20
     commands:
       - echo Installing Node.js version 20 ...
+      - npm install
   pre_build:
     commands:
       - echo Installing dependencies...
-      - npm ci  # Using npm ci for faster dependency installation
-      - echo Running linting (if needed)...
-      # - npm run lint  # Uncomment if you want to run linting
-      - echo Running unit tests (if any)...
-      # - npm run test  # Uncomment if you have unit tests configured
+      # Removed npm install here as it is redundant
   build:
     commands:
       - echo Building the app...
-      - npm run build  # Builds the app
+      - npm run build
 
 artifacts:
   files:
-    - '**/*' 
+    - '**/*'
   discard-paths: no
   base-directory: build
